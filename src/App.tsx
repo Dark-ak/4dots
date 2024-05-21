@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import smile from "../src/assets/smile.png"
 import robot from "../src/assets/robot.png"
 import { Link } from 'react-router-dom'

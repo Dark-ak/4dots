@@ -1,11 +1,16 @@
-import { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import timer from "../assets/timer.png"
 import timer2 from "../assets/timer2.png"
 import { whoWin } from '../utils/Algo'
 import { GameContext } from '../utils/Context'
 
+type BoardProps = {
+    board: Array<Array<number>>,
+    setBoard: React.Dispatch<React.SetStateAction<Array<Array<number>>>>
+}
 
-const Board = ({ board, setBoard }) => {
+
+const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
 
     const context = useContext(GameContext)
     // const [player, setPlayer] = useState(1)
@@ -40,7 +45,7 @@ const Board = ({ board, setBoard }) => {
                 incScores(player == 1 ? 2 : 1)
             })
         }
-    }, [time, player])
+    })
 
     const changePlayer = () => {
         setPlayer(player == 1 ? 2 : 1)
@@ -96,7 +101,7 @@ const Board = ({ board, setBoard }) => {
             {board.map((col, colIndex: number) => {
                 return (
                     <div key={colIndex} className='grid gap-2 hover:cursor-pointer' onClick={() => checkRow(colIndex) ? handleClick(colIndex) : ""}>
-                        {col.map((dot, dotIndex: number) => {
+                        {col.map((_dot: number, dotIndex: number) => {
                             return (
                                 <div key={dotIndex} className={`rounded-full w-11 h-11 md:w-14 md:h-14 lg:w-14 lg:h-14 shadow-[inset_0_10px_0px_rgba(0,0,0,0.6)]  border-4 border-black  shadow-black ${board[colIndex][dotIndex] === 1 ? "bg-pink-500" : board[colIndex][dotIndex] === 2 ? "bg-ye" : "bg-primary"}`}> </div>
 

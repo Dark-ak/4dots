@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from 'react'
 import Logo from './Logo'
 import PLayer1 from "../assets/player-1.png"
@@ -14,7 +15,7 @@ const GameScreen = () => {
     const [board, setBoard] = useState(Array.from({ length: 7 }, () => Array(6).fill(0)));
 
 
-    const {winner, scores, player, setScores,setWinner, setPlayer} = context!
+    const {winner, scores, setScores,setWinner} = context!
     // console.log(scores)
 
     const basic = Array.from({ length: 7 }, () => Array(6).fill(0))

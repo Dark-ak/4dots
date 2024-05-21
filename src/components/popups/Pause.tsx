@@ -1,6 +1,14 @@
+import React from "react"
 import { Link } from "react-router-dom"
 
-const Pause = ({setPause, restart}) => {
+type Restart = () => void;
+
+type PauseProps = {
+  setPause: React.Dispatch<React.SetStateAction<boolean>>,
+  restart: Restart
+}
+
+const Pause: React.FC<PauseProps> = ({setPause, restart}) => {
 
   const handleExit = () => {
     setPause(false)
