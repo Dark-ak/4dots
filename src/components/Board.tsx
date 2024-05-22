@@ -36,16 +36,16 @@ const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
         }, 1000)
 
         return () => clearInterval(timer)
-    }, [player, winner])
+    }, [player,winner])
 
     useEffect(() => {
-        if (time == 0 && winner == 0) {
-            Promise.resolve().then(() => {
-                setWinner(player == 1 ? 2 : 1)
-                incScores(player == 1 ? 2 : 1)
-            })
-        }
-    })
+        if (time == 0 && winner == 0){
+            console.log("triggered")
+            setWinner(player == 1 ? 2 : 1)
+            incScores(player == 1 ? 2 : 1)
+        } 
+        console.log(winner)
+    },[])
 
     const changePlayer = () => {
         setPlayer(player == 1 ? 2 : 1)
@@ -91,8 +91,9 @@ const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
     }
 
     const handleAgain = () => {
-        setBoard(basic)
         setWinner(0)
+        setBoard(basic)
+        
     }
 
     return (
