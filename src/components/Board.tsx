@@ -13,11 +13,9 @@ type BoardProps = {
 const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
 
     const context = useContext(GameContext)
-    // const [player, setPlayer] = useState(1)
-    // const [board, setBoard] = useState(Array.from({ length: 7 }, () => Array(6).fill(0)));
     const [time, setTime] = useState(30)
 
-    const { winner, setWinner, setScores, player, setPlayer } = context!
+    const { winner,scores, setWinner, setScores, player, setPlayer } = context!
 
     const basic = Array.from({ length: 7 }, () => Array(6).fill(0))
 
@@ -28,7 +26,12 @@ const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
             setTime((prevTime) => {
                 if (winner == 0 && prevTime > 1) {
                     return prevTime - 1
-                } else {
+                }
+                // else if(prevTime == 0){
+                //     timeOver()
+                // }
+                 else {
+                    timeOver()
                     clearInterval(timer)
                     return 0
                 }
@@ -36,16 +39,23 @@ const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
         }, 1000)
 
         return () => clearInterval(timer)
-    }, [player,winner])
+    }, [player,winner,scores])
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     if (time == 0 && winner == 0){
+    //         setWinner(player == 1 ? 2 : 1)
+    //         incScores(player == 1 ? 2 : 1)
+    //     } 
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // },[])
+
+    const timeOver = () => {
         if (time == 0 && winner == 0){
-            console.log("triggered")
             setWinner(player == 1 ? 2 : 1)
             incScores(player == 1 ? 2 : 1)
         } 
-        console.log(winner)
-    },[])
+        return
+    }
 
     const changePlayer = () => {
         setPlayer(player == 1 ? 2 : 1)
@@ -93,7 +103,7 @@ const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
     const handleAgain = () => {
         setWinner(0)
         setBoard(basic)
-        
+        timeOver()
     }
 
     return (

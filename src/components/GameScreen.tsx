@@ -16,7 +16,7 @@ const GameScreen = () => {
 
 
     const {winner, scores, setScores,setWinner} = context!
-    // console.log(scores)
+
 
     const basic = Array.from({ length: 7 }, () => Array(6).fill(0))
 
@@ -27,6 +27,7 @@ const GameScreen = () => {
     const handleRestart = () => {
         setWinner(0)
         setScores([0,0])
+        
         setBoard(basic)
     }
 
