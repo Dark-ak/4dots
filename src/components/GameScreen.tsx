@@ -12,6 +12,7 @@ const GameScreen = () => {
     const context = useContext(GameContext)
     const location = useLocation();
     const [isPaused, setIspaused] = useState(false)
+    const [flag,setFlag] = useState(false)
     const [board, setBoard] = useState(Array.from({ length: 7 }, () => Array(6).fill(0)));
 
 
@@ -27,8 +28,8 @@ const GameScreen = () => {
     const handleRestart = () => {
         setWinner(0)
         setScores([0,0])
-        
         setBoard(basic)
+        setFlag(!flag)
     }
 
     useEffect(() => {
@@ -66,7 +67,7 @@ const GameScreen = () => {
                         <p className='text-black text-center font-mono font-semibold'>PLAYER 1</p>
                         <p className='text-center font-mono text-black text-2xl font-semibold'>{scores[0]}</p>
                     </div>
-                    <Board board={board} setBoard={setBoard}/>
+                    <Board board={board} setBoard={setBoard} flag={flag}/>
                     <div className='hidden md:relative md:block bg-white px-8 rounded-2xl shadow-4xl border-2 border-black py-2'>
                         <img src={Player2} alt="" className='absolute w-12 -right-6' />
                         <p className='text-black text-center font-mono font-semibold'>PLAYER 2</p>

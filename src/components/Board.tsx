@@ -6,16 +6,16 @@ import { GameContext } from '../utils/Context'
 
 type BoardProps = {
     board: Array<Array<number>>,
-    setBoard: React.Dispatch<React.SetStateAction<Array<Array<number>>>>
+    setBoard: React.Dispatch<React.SetStateAction<Array<Array<number>>>>,
+    flag: boolean
 }
 
 
-const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
+const Board: React.FC<BoardProps> = ({ board,flag, setBoard }) => {
 
     const context = useContext(GameContext)
     const [time, setTime] = useState(30)
-
-    const { winner,scores, setWinner, setScores, player, setPlayer } = context!
+    const { winner, player, setWinner, setScores, setPlayer } = context!
 
     const basic = Array.from({ length: 7 }, () => Array(6).fill(0))
 
@@ -27,35 +27,18 @@ const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
                 if (winner == 0 && prevTime > 1) {
                     return prevTime - 1
                 }
-                // else if(prevTime == 0){
-                //     timeOver()
-                // }
-                 else {
-                    timeOver()
+                else {
                     clearInterval(timer)
-                    return 0
+                    setWinner(player == 1 ? 2 : 1)
+                    incScores(winner)
                 }
+                return 0
             })
         }, 1000)
 
         return () => clearInterval(timer)
-    }, [player,winner,scores])
-
-    // useEffect(() => {
-    //     if (time == 0 && winner == 0){
-    //         setWinner(player == 1 ? 2 : 1)
-    //         incScores(player == 1 ? 2 : 1)
-    //     } 
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // },[])
-
-    const timeOver = () => {
-        if (time == 0 && winner == 0){
-            setWinner(player == 1 ? 2 : 1)
-            incScores(player == 1 ? 2 : 1)
-        } 
-        return
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [player, winner,flag])
 
     const changePlayer = () => {
         setPlayer(player == 1 ? 2 : 1)
@@ -91,8 +74,8 @@ const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
     };
 
     const checkRow = (colIndex: number) => {
-        for(let i = 0; i < 6; i++){
-            if(board[colIndex][i] == 0) {
+        for (let i = 0; i < 6; i++) {
+            if (board[colIndex][i] == 0) {
                 return true
             }
 
@@ -103,8 +86,8 @@ const Board: React.FC<BoardProps> = ({ board, setBoard }) => {
     const handleAgain = () => {
         setWinner(0)
         setBoard(basic)
-        timeOver()
     }
+
 
     return (
         <div className='relative flex my-2 px-1 gap-2 z-40 py-2 pb-6 bg-white rounded-2xl border-black border-4 shadow-4xl'>
