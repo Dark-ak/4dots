@@ -8,8 +8,8 @@ type RuleProps = {
 const Rules = ({rules, setRules} : RuleProps) => {
 
     return (
-        <div className={`inset-0 absolute  w-screen bg-gray-100 bg-opacity-30 h-screen z-50 flex items-center justify-center popup ${rules ? "translate-x-10 transition" : "hidden"}`}>
-            <div className='bg-white relative flex items-center flex-col border-black w-[90%] lg:w-[650px] border-4 rounded-xl shadow-4xl px-12 py-10'>
+        <div className={`inset-0 absolute   w-screen bg-gray-100 bg-opacity-30 h-screen z-50 flex items-center justify-center pt-6 mb-10 ${rules ? "absolute" : "hidden"}`}>
+            <div className='bg-white relative flex items-center flex-col border-black w-[90%] lg:w-[650px] border-4 rounded-xl shadow-4xl px-2 py-3 md:px-12 md:py-10'>
                 <p className='text-5xl font-quick font-semibold text-center'>RULES</p>
                 <div className='flex flex-col gap-6  mt-5'>
                     <div className='flex flex-col gap-2'>
@@ -36,7 +36,7 @@ const Rules = ({rules, setRules} : RuleProps) => {
                         </div>
                     </div>
                 </div>
-                <img src={ok} alt="" className='absolute -bottom-12 border-2 shadow-4xl hover:shadow-pink-700 hover:border-pink-700 hover:cursor-pointer  rounded-full border-black w-24' onClick={() => setRules(!rules)} />
+                <img src={ok} alt="" className='absolute -bottom-12 border-2 shadow-4xl hover:shadow-pink-700 hover:border-pink-700 hover:cursor-pointer  rounded-full border-black w-16 lg:w-24' onClick={() => setRules(!rules)} />
             </div>
         </div>
     )

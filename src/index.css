@@ -14,3 +14,7 @@
   .popup.active {
     bottom: 50%; /* Center vertically */
   }
+
+  body {
+    background-color: #7A45FF;
+  }

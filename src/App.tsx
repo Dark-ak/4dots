@@ -9,9 +9,6 @@ import Rules from "./components/Rules.js"
 function App() {
 
   const [rules, setRules] = useState(false)
-
-  console.log(rules)
-
   return (
     <div className='flex items-center justify-center bg-primary h-screen w-screen'>
       <div className='flex flex-col items-center gap-5'>

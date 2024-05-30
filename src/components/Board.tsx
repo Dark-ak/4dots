@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import timer from "../assets/timer.png"
 import timer2 from "../assets/timer2.png"
 import { whoWin } from '../utils/Algo'
@@ -8,27 +8,34 @@ type BoardProps = {
     board: Array<Array<number>>,
     setBoard: React.Dispatch<React.SetStateAction<Array<Array<number>>>>,
     flag: boolean
+    paused: boolean
 }
 
 
-const Board: React.FC<BoardProps> = ({ board,flag, setBoard }) => {
+const Board: React.FC<BoardProps> = ({ board, flag, setBoard, paused }) => {
 
     const context = useContext(GameContext)
     const [time, setTime] = useState(30)
     const { winner, player, setWinner, setScores, setPlayer } = context!
-
+    const pausedRef = useRef(paused)
     const basic = Array.from({ length: 7 }, () => Array(6).fill(0))
 
+
+    useEffect(() => {
+        pausedRef.current = paused
+    }, [paused])
 
     useEffect(() => {
         setTime(30)
         const timer = setInterval(() => {
             setTime((prevTime) => {
                 if (winner == 0 && prevTime > 1) {
-                    return prevTime - 1
+                    return pausedRef.current ? prevTime : prevTime - 1
                 }
                 else {
                     clearInterval(timer)
+                    console.log("trig")
+
                     setWinner(player == 1 ? 2 : 1)
                     incScores(winner)
                 }
@@ -37,8 +44,8 @@ const Board: React.FC<BoardProps> = ({ board,flag, setBoard }) => {
         }, 1000)
 
         return () => clearInterval(timer)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [player, winner,flag])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [player, winner, flag])
 
     const changePlayer = () => {
         setPlayer(player == 1 ? 2 : 1)
@@ -47,7 +54,7 @@ const Board: React.FC<BoardProps> = ({ board,flag, setBoard }) => {
     const incScores = (player: number) => {
         setScores(prevScore => {
             const newvalues = [...prevScore]
-            newvalues[player - 1] = newvalues[player - 1] + 1
+            newvalues[player - 1] = (newvalues[player - 1] + 1)
             return newvalues
         })
     }
@@ -68,8 +75,10 @@ const Board: React.FC<BoardProps> = ({ board,flag, setBoard }) => {
         changePlayer()
         const check = whoWin(newBoard)
         if (check != null) {
+            console.log("trig")
+
             setWinner(player)
-            incScores(player)
+            // incScores(player)
         }
     };
 

@@ -6,6 +6,7 @@ import Player2 from "../assets/player-2.png"
 import Board from './Board'
 import Pause from './popups/Pause'
 import {useLocation} from "react-router-dom"
+import robot from "../assets/robot.png"
 import { GameContext } from '../utils/Context'
 
 const GameScreen = () => {
@@ -16,13 +17,13 @@ const GameScreen = () => {
     const [board, setBoard] = useState(Array.from({ length: 7 }, () => Array(6).fill(0)));
 
 
-    const {winner, scores, setScores,setWinner} = context!
+    const {winner, scores, isPc, setScores,setWinner} = context!
 
 
     const basic = Array.from({ length: 7 }, () => Array(6).fill(0))
 
     const handleMenu = () => {
-        setIspaused(!isPaused)
+        setIspaused(true)
     }
 
     const handleRestart = () => {
@@ -39,7 +40,7 @@ const GameScreen = () => {
 
 
     return (
-        <div className='bg-primary h-screen w-screen relative overflow-hidden'>
+        <div className='bg-primary h-screen w-screen relative lg:overflow-hidden'>
             <div className={`${isPaused ? "flex" : "hidden"}`}>
                 <Pause setPause={setIspaused} restart={handleRestart} />
             </div>
@@ -67,10 +68,10 @@ const GameScreen = () => {
                         <p className='text-black text-center font-mono font-semibold'>PLAYER 1</p>
                         <p className='text-center font-mono text-black text-2xl font-semibold'>{scores[0]}</p>
                     </div>
-                    <Board board={board} setBoard={setBoard} flag={flag}/>
+                    <Board board={board} setBoard={setBoard} paused={isPaused} flag={flag}/>
                     <div className='hidden md:relative md:block bg-white px-8 rounded-2xl shadow-4xl border-2 border-black py-2'>
-                        <img src={Player2} alt="" className='absolute w-12 -right-6' />
-                        <p className='text-black text-center font-mono font-semibold'>PLAYER 2</p>
+                        <img src={isPc ? robot :Player2} alt="" className={`absolute w-12 -right-6`} />
+                        <p className='text-black text-center font-mono font-semibold'>{isPc ? "CPU" : "PLAYER 2"}</p>
                         <p className='text-center font-mono text-black text-2xl font-semibold'>{scores[1]}</p>
                     </div>
                 </div>
