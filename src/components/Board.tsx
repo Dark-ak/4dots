@@ -3,6 +3,7 @@ import timer from "../assets/timer.png"
 import timer2 from "../assets/timer2.png"
 import { whoWin } from '../utils/Algo'
 import { GameContext } from '../utils/Context'
+import { Bot } from '../utils/Bot'
 
 type BoardProps = {
     board: Array<Array<number>>,
@@ -16,7 +17,7 @@ const Board: React.FC<BoardProps> = ({ board, flag, setBoard, paused }) => {
 
     const context = useContext(GameContext)
     const [time, setTime] = useState(30)
-    const { winner, player, setWinner, setScores, setPlayer } = context!
+    const { winner, player,isPc, setWinner, setScores, setPlayer } = context!
     const pausedRef = useRef(paused)
     const basic = Array.from({ length: 7 }, () => Array(6).fill(0))
 
@@ -47,6 +48,12 @@ const Board: React.FC<BoardProps> = ({ board, flag, setBoard, paused }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [player, winner, flag])
 
+    useEffect(() => {
+        if(player == 2 && isPc == true){
+            handleClick(Bot(board))
+        }
+    })
+
     const changePlayer = () => {
         setPlayer(player == 1 ? 2 : 1)
     }
@@ -64,7 +71,6 @@ const Board: React.FC<BoardProps> = ({ board, flag, setBoard, paused }) => {
             return
         }
         const newBoard = board;
-        // let foundEmpty = false; // Flag to track if an empty position is found
         for (let i = newBoard[colIndex].length - 1; i >= 0; i--) {
             if (!newBoard[colIndex][i]) { // Check if position is empty and flag is false
                 newBoard[colIndex][i] = player;
