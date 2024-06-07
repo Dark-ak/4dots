@@ -14,7 +14,7 @@ function App() {
 
   const context = useContext(GameContext)
 
-  const { isPc,setIsPc } = context!
+  const { isPc, setIsPc } = context!
 
   useEffect(() => {
     setIsPc(false)
