@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import smile from "../src/assets/smile.png"
 import robot from "../src/assets/robot.png"
 import { Link } from 'react-router-dom'
@@ -14,7 +15,7 @@ function App() {
 
   const context = useContext(GameContext)
 
-  const { isPc, setIsPc } = context!
+  const { setIsPc } = context!
 
   useEffect(() => {
     setIsPc(false)
